@@ -260,4 +260,93 @@ public class GuiController {
         camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
     }
 
+    @FXML
+    public void handleTranslateXNegative(ActionEvent actionEvent) {
+        float delta = -0.1f; // Шаг перемещения в отрицательном направлении
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            vertex.x += delta;
+        }
+    }
+
+    @FXML
+    public void handleTranslateYNegative(ActionEvent actionEvent) {
+        float delta = -0.1f; // Шаг перемещения в отрицательном направлении
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            vertex.y += delta;
+        }
+    }
+
+    @FXML
+    public void handleTranslateZNegative(ActionEvent actionEvent) {
+        float delta = -0.1f; // Шаг перемещения в отрицательном направлении
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            vertex.z += delta;
+        }
+    }
+
+    @FXML
+    public void handleRotateXNegative(ActionEvent actionEvent) {
+        float angle = -5.0f; // Угол поворота в отрицательном направлении
+        float rad = (float) Math.toRadians(angle);
+        float cos = (float) Math.cos(rad);
+        float sin = (float) Math.sin(rad);
+
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            float y = vertex.y * cos - vertex.z * sin;
+            float z = vertex.y * sin + vertex.z * cos;
+            vertex.y = y;
+            vertex.z = z;
+        }
+    }
+
+    @FXML
+    public void handleRotateYNegative(ActionEvent actionEvent) {
+        float angle = -5.0f; // Угол поворота в отрицательном направлении
+        float rad = (float) Math.toRadians(angle);
+        float cos = (float) Math.cos(rad);
+        float sin = (float) Math.sin(rad);
+
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            float x = vertex.x * cos + vertex.z * sin;
+            float z = -vertex.x * sin + vertex.z * cos;
+            vertex.x = x;
+            vertex.z = z;
+        }
+    }
+
+    @FXML
+    public void handleRotateZNegative(ActionEvent actionEvent) {
+        float angle = -5.0f; // Угол поворота в отрицательном направлении
+        float rad = (float) Math.toRadians(angle);
+        float cos = (float) Math.cos(rad);
+        float sin = (float) Math.sin(rad);
+
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            float x = vertex.x * cos - vertex.y * sin;
+            float y = vertex.x * sin + vertex.y * cos;
+            vertex.x = x;
+            vertex.y = y;
+        }
+    }
+
+    @FXML
+    public void handleScaleIncrease(ActionEvent actionEvent) {
+        float scaleFactor = 1.1f; // Увеличение масштаба
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            vertex.x *= scaleFactor;
+            vertex.y *= scaleFactor;
+            vertex.z *= scaleFactor;
+        }
+    }
+
+    @FXML
+    public void handleScaleDecrease(ActionEvent actionEvent) {
+        float scaleFactor = 0.9f; // Уменьшение масштаба
+        for (com.cgvsu.math.Vector3f vertex : scene.getActiveModel().vertices) {
+            vertex.x *= scaleFactor;
+            vertex.y *= scaleFactor;
+            vertex.z *= scaleFactor;
+        }
+    }
+
 }
