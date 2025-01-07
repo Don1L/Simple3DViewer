@@ -6,14 +6,22 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Label?>
 
 <AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cgvsu.GuiController">
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#onOpenModelMenuItemClick" text="Load Model">
-            <accelerator>
-                <KeyCodeCombination alt="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" code="F"/>
-            </accelerator>
+                <accelerator>
+                    <KeyCodeCombination alt="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" code="F"/>
+                </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onSaveModelMenuItemClick" text="Save Model">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" code="S"/>
+                </accelerator>
             </MenuItem>
         </Menu>
         <Menu mnemonicParsing="false" text="Camera Options">
@@ -48,7 +56,26 @@
                 </accelerator>
             </MenuItem>
         </Menu>
+        <Menu mnemonicParsing="false" text="Transformations">
+            <MenuItem mnemonicParsing="false" onAction="#handleTranslateX" text="Translate X"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleTranslateY" text="Translate Y"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleTranslateZ" text="Translate Z"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleRotateX" text="Rotate X"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleRotateY" text="Rotate Y"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleRotateZ" text="Rotate Z"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleScale" text="Scale"/>
+        </Menu>
     </MenuBar>
 
     <Canvas fx:id="canvas" width="1600" height="870" AnchorPane.topAnchor="30.0"/>
+
+    <!-- Добавляем ListView для выбора активной модели -->
+    <ListView fx:id="modelList" layoutX="10" layoutY="40" prefWidth="200" prefHeight="200" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="40">
+        <items>
+            <FXCollections fx:factory="observableArrayList"/>
+        </items>
+    </ListView>
+
+    <!-- Добавляем Label для отображения информации о выбранной модели -->
+    <Label text="Active Model:" layoutX="10" layoutY="250" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="250"/>
 </AnchorPane>
