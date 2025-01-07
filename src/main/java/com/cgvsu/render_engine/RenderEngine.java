@@ -1,15 +1,37 @@
 package com.cgvsu.render_engine;
 
-import java.util.ArrayList;
-
 import com.cgvsu.math.Vector3f;
 import javafx.scene.canvas.GraphicsContext;
 import javax.vecmath.*;
 import com.cgvsu.model.Model;
+
+import java.util.ArrayList;
+
 import static com.cgvsu.render_engine.GraphicConveyor.*;
 
 public class RenderEngine {
 
+    // Добавляем переменную для хранения цвета отрисовки
+    private static javafx.scene.paint.Color strokeColor = javafx.scene.paint.Color.BLACK;
+
+    /**
+     * Устанавливает цвет отрисовки для всех моделей.
+     *
+     * @param color Цвет, который будет использоваться для отрисовки.
+     */
+    public static void setStrokeColor(javafx.scene.paint.Color color) {
+        strokeColor = color;
+    }
+
+    /**
+     * Отрисовывает модель на холсте с использованием текущей камеры.
+     *
+     * @param graphicsContext Контекст графики для отрисовки.
+     * @param camera          Камера, используемая для отрисовки.
+     * @param mesh            Модель, которую нужно отрисовать.
+     * @param width           Ширина холста.
+     * @param height          Высота холста.
+     */
     public static void render(
             final GraphicsContext graphicsContext,
             final Camera camera,
@@ -30,6 +52,9 @@ public class RenderEngine {
         Matrix4f modelViewProjectionMatrix = new Matrix4f(modelMatrix);
         modelViewProjectionMatrix.mul(viewMatrix);
         modelViewProjectionMatrix.mul(projectionMatrix);
+
+        // Устанавливаем цвет отрисовки
+        graphicsContext.setStroke(strokeColor);
 
         // Отрисовка полигонов модели
         final int nPolygons = mesh.polygons.size();
