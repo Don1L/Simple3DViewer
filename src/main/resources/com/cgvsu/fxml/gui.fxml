@@ -65,7 +65,7 @@
 
     <!-- Список объектов на сцене -->
     <VBox layoutX="10" layoutY="40" spacing="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="40">
-        <Label text="Models on Scene:"/>
+        <Label fx:id="modelsLabel" text="Models on Scene:"/>
         <ListView fx:id="modelList" prefWidth="200" prefHeight="200">
             <items>
                 <FXCollections fx:factory="observableArrayList"/>
@@ -75,10 +75,10 @@
 
     <!-- Панель трансформаций -->
     <VBox layoutX="220" layoutY="40" spacing="10" AnchorPane.leftAnchor="220" AnchorPane.topAnchor="40">
-        <Label text="Transformations:"/>
+        <Label fx:id="transformationsLabel" text="Transformations:"/>
 
         <!-- Перемещение -->
-        <Label text="Translation:"/>
+        <Label fx:id="translationLabel" text="Translation:"/>
         <HBox spacing="5">
             <Button text="X+" onAction="#handleTranslateX"/>
             <Button text="X-" onAction="#handleTranslateXNegative"/>
@@ -93,7 +93,7 @@
         </HBox>
 
         <!-- Вращение -->
-        <Label text="Rotation:"/>
+        <Label fx:id="rotationLabel" text="Rotation:"/>
         <HBox spacing="5">
             <Button text="Rotate X+" onAction="#handleRotateX"/>
             <Button text="Rotate X-" onAction="#handleRotateXNegative"/>
@@ -108,10 +108,14 @@
         </HBox>
 
         <!-- Масштабирование -->
-        <Label text="Scale:"/>
+        <Label fx:id="scaleLabel" text="Scale:"/>
         <HBox spacing="5">
             <Button text="Scale +" onAction="#handleScaleIncrease"/>
             <Button text="Scale -" onAction="#handleScaleDecrease"/>
         </HBox>
+
+        <!-- Кнопка для переключения темы -->
+        <Label fx:id="themeLabel" text="Theme:"/>
+        <Button text="Toggle Theme" onAction="#handleToggleTheme"/>
     </VBox>
 </AnchorPane>
