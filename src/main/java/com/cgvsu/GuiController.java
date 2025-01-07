@@ -11,10 +11,16 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -40,20 +46,19 @@ public class GuiController {
 
     private Scene scene = new Scene();
 
-    private Model mesh = null;
-
     private Camera camera = new Camera(
             new Vector3f(0, 00, 100),
             new Vector3f(0, 0, 0),
             1.0F, 1, 0.01F, 100);
 
     private Timeline timeline;
-    private Model model;
 
     @FXML
     private ListView<String> modelList;
 
     private ObservableList<String> modelNames = FXCollections.observableArrayList();
+
+    private boolean isDarkTheme = false;
 
     @FXML
     private void initialize() {
@@ -87,9 +92,10 @@ public class GuiController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
+
+        // Применяем тему при запуске
+        applyTheme();
     }
-
-
 
     @FXML
     private void onOpenModelMenuItemClick() {
@@ -136,6 +142,7 @@ public class GuiController {
             }
         }
     }
+
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -151,6 +158,7 @@ public class GuiController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     public void handleTranslateX(ActionEvent actionEvent) {
         float delta = 0.1f; // Шаг перемещения
@@ -349,4 +357,61 @@ public class GuiController {
         }
     }
 
+    @FXML
+    public void handleToggleTheme(ActionEvent actionEvent) {
+        isDarkTheme = !isDarkTheme; // Переключаем тему
+        applyTheme(); // Применяем тему
+    }
+
+    private void applyTheme() {
+        if (isDarkTheme) {
+            // Устанавливаем тёмную тему
+            anchorPane.setStyle("-fx-background-color: #2E2E2E;");
+            RenderEngine.setStrokeColor(javafx.scene.paint.Color.WHITE); // Белый цвет для объектов
+
+            // Изменяем цвет текста на белый
+            modelList.setStyle("-fx-text-fill: white; -fx-control-inner-background: #2E2E2E;");
+            setTextColorForNodes(anchorPane, "white");
+
+            // Устанавливаем тёмный фон для кнопок
+            setButtonStyle(anchorPane, "-fx-background-color: #444444; -fx-text-fill: white;");
+        } else {
+            // Устанавливаем светлую тему
+            anchorPane.setStyle("-fx-background-color: #FFFFFF;");
+            RenderEngine.setStrokeColor(javafx.scene.paint.Color.BLACK); // Чёрный цвет для объектов
+
+            // Изменяем цвет текста на чёрный
+            modelList.setStyle("-fx-text-fill: black; -fx-control-inner-background: white;");
+            setTextColorForNodes(anchorPane, "black");
+
+            // Устанавливаем светлый фон для кнопок
+            setButtonStyle(anchorPane, "-fx-background-color: #DDDDDD; -fx-text-fill: black;");
+        }
+    }
+
+    // Вспомогательный метод для изменения цвета текста у всех элементов
+    private void setTextColorForNodes(Parent parent, String color) {
+        for (javafx.scene.Node node : parent.getChildrenUnmodifiable()) {
+            if (node instanceof Label) {
+                ((Label) node).setStyle("-fx-text-fill: " + color + ";");
+            } else if (node instanceof Button) {
+                // Текст внутри кнопок уже обрабатывается в setButtonStyle
+            } else if (node instanceof Parent) {
+                // Рекурсивно обрабатываем дочерние элементы контейнеров
+                setTextColorForNodes((Parent) node, color);
+            }
+        }
+    }
+
+    // Вспомогательный метод для изменения стиля кнопок
+    private void setButtonStyle(Parent parent, String style) {
+        for (javafx.scene.Node node : parent.getChildrenUnmodifiable()) {
+            if (node instanceof Button) {
+                ((Button) node).setStyle(style);
+            } else if (node instanceof Parent) {
+                // Рекурсивно обрабатываем дочерние элементы контейнеров
+                setButtonStyle((Parent) node, style);
+            }
+        }
+    }
 }
