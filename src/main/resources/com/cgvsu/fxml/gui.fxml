@@ -9,6 +9,9 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cgvsu.GuiController">
     <MenuBar>
@@ -56,26 +59,59 @@
                 </accelerator>
             </MenuItem>
         </Menu>
-        <Menu mnemonicParsing="false" text="Transformations">
-            <MenuItem mnemonicParsing="false" onAction="#handleTranslateX" text="Translate X"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleTranslateY" text="Translate Y"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleTranslateZ" text="Translate Z"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleRotateX" text="Rotate X"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleRotateY" text="Rotate Y"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleRotateZ" text="Rotate Z"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleScale" text="Scale"/>
-        </Menu>
     </MenuBar>
 
     <Canvas fx:id="canvas" width="1600" height="870" AnchorPane.topAnchor="30.0"/>
 
-    <!-- Добавляем ListView для выбора активной модели -->
-    <ListView fx:id="modelList" layoutX="10" layoutY="40" prefWidth="200" prefHeight="200" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="40">
-        <items>
-            <FXCollections fx:factory="observableArrayList"/>
-        </items>
-    </ListView>
+    <!-- Список объектов на сцене -->
+    <VBox layoutX="10" layoutY="40" spacing="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="40">
+        <Label text="Models on Scene:"/>
+        <ListView fx:id="modelList" prefWidth="200" prefHeight="200">
+            <items>
+                <FXCollections fx:factory="observableArrayList"/>
+            </items>
+        </ListView>
+    </VBox>
 
-    <!-- Добавляем Label для отображения информации о выбранной модели -->
-    <Label text="Active Model:" layoutX="10" layoutY="250" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="250"/>
+    <!-- Панель трансформаций -->
+    <VBox layoutX="220" layoutY="40" spacing="10" AnchorPane.leftAnchor="220" AnchorPane.topAnchor="40">
+        <Label text="Transformations:"/>
+
+        <!-- Перемещение -->
+        <Label text="Translation:"/>
+        <HBox spacing="5">
+            <Button text="X+" onAction="#handleTranslateX"/>
+            <Button text="X-" onAction="#handleTranslateXNegative"/>
+        </HBox>
+        <HBox spacing="5">
+            <Button text="Y+" onAction="#handleTranslateY"/>
+            <Button text="Y-" onAction="#handleTranslateYNegative"/>
+        </HBox>
+        <HBox spacing="5">
+            <Button text="Z+" onAction="#handleTranslateZ"/>
+            <Button text="Z-" onAction="#handleTranslateZNegative"/>
+        </HBox>
+
+        <!-- Вращение -->
+        <Label text="Rotation:"/>
+        <HBox spacing="5">
+            <Button text="Rotate X+" onAction="#handleRotateX"/>
+            <Button text="Rotate X-" onAction="#handleRotateXNegative"/>
+        </HBox>
+        <HBox spacing="5">
+            <Button text="Rotate Y+" onAction="#handleRotateY"/>
+            <Button text="Rotate Y-" onAction="#handleRotateYNegative"/>
+        </HBox>
+        <HBox spacing="5">
+            <Button text="Rotate Z+" onAction="#handleRotateZ"/>
+            <Button text="Rotate Z-" onAction="#handleRotateZNegative"/>
+        </HBox>
+
+        <!-- Масштабирование -->
+        <Label text="Scale:"/>
+        <HBox spacing="5">
+            <Button text="Scale +" onAction="#handleScaleIncrease"/>
+            <Button text="Scale -" onAction="#handleScaleDecrease"/>
+        </HBox>
+    </VBox>
 </AnchorPane>
